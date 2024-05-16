@@ -10,6 +10,7 @@ using Cinemachine;
 public class PlayerScore : UnityEvent<int> { }
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] private BuffManager _buffManager;
     [SerializeField] private TextMeshProUGUI _scores;
     [SerializeField] private GameObject _fire;
     private int curentScores;
@@ -34,21 +35,30 @@ public class ScoreManager : MonoBehaviour
             if (isFire == true)
             {
                 _fire.SetActive(true);
-                t += timeToFire;
+                t = timeToFire;
             }
-            t = timeToFire;
-            isFire = true;
+            else
+            {
+                t = timeToFire;
+                isFire = true;
+            }
         }
-        curentScores += scores;
+        if (_buffManager.IsExtraExtractionActive)
+        {
+            curentScores += scores*2;
+        }
+        else
+        {
+            curentScores += scores ;
+        }
         _scores.text = curentScores.ToString();
         scoreAnimation.Play("ScoreAnimation");
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (isFire)
         {
             t -= Time.fixedDeltaTime;
-            Debug.Log(t);
             if (t <= 0)
             {
                 _fire.SetActive(false);

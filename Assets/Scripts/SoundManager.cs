@@ -27,13 +27,10 @@ public class SoundManager : MonoBehaviour
     }
     public void PlaySingle(AudioClip clip)
 		{
-			if (efxSource.isPlaying)
-			{
-				reserveEfxSourcee.clip = clip;
-				reserveEfxSourcee.Play();
-			}
-            efxSource.clip = clip;
-			efxSource.Play ();
+			float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+			efxSource.pitch = randomPitch;
+			efxSource.clip = clip;
+			efxSource.Play();
 		}
 		public void RandomizeSfx(List<AudioClip> clips)
 		{

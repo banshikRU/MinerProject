@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2615569002567638836, guid: fc584d329b77b9545b9c9c8bb829e553, type: 3}
+  m_Sprite: {fileID: 3996717, guid: df7b7c4fd7bd55a4d867b11bad9a22c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myEndurance: 5
-  _myEnduranceBarPrefab: {fileID: 6056559164730936455, guid: 26289c2a8ea6a984abfb7ce61a85573a, type: 3}
+  _myEnduranceBarPrefab: {fileID: 7035943409419007490, guid: 26289c2a8ea6a984abfb7ce61a85573a, type: 3}
   _floorLayer:
     serializedVersion: 2
     m_Bits: 8

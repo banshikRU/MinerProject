@@ -6,9 +6,10 @@ using Random = UnityEngine.Random;
 public class BuildNewLevel : UnityEvent { }
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> wallTiles;
-    [SerializeField] private List<GameObject> floorTiles;
-    [SerializeField] private List<GameObject> ores;
+    [SerializeField] private List<GameObject> _wallTiles;
+    [SerializeField] private List<GameObject> _floorTiles;
+    [SerializeField] private List<GameObject> _ores;
+    [SerializeField] private List<GameObject> _buffs;
     private int _curentLevel;
     private float _strongBlockMin;
     private float _strongBlockMax;
@@ -16,6 +17,9 @@ public class LevelBuilder : MonoBehaviour
     private float _minRareOresSpawn;
     private float _maxRareOresSpawn;
     public static BuildNewLevel BuildNewLevel = new BuildNewLevel();
+
+    public int CurentLevel { get => _curentLevel; set => _curentLevel = value; }
+
     public void Initialize()
     {
         BuildNewLevel.AddListener(BuildNewWorldLevel);
@@ -23,31 +27,31 @@ public class LevelBuilder : MonoBehaviour
         {
             BuildNewWorldLevel();
         }
-        _curentLevel = 0;
+        CurentLevel = 0;
     }
     public void BuildNewWorldLevel()
     {
-        _curentLevel += 1;
-        _strongBlockMin = _curentLevel * 0.05f;
-        _strongBlockMax = _curentLevel * 0.03f;
-        _minOresSpawn = _curentLevel * 0.01f;
-        _minRareOresSpawn = _curentLevel * 0.05f;
-        _maxRareOresSpawn = _curentLevel * 0.03f;
+        CurentLevel += 1;
+        _strongBlockMin = CurentLevel * 0.05f;
+        _strongBlockMax = CurentLevel * 0.03f;
+        _minOresSpawn = CurentLevel * 0.01f;
+        _minRareOresSpawn = CurentLevel * 0.05f;
+        _maxRareOresSpawn = CurentLevel * 0.03f;
         if (_strongBlockMin >= 2)
         {
             _strongBlockMin = 2;
         }
-        if (_strongBlockMax >= floorTiles.Count)
+        if (_strongBlockMax >= _floorTiles.Count)
         {
-            _strongBlockMax = floorTiles.Count;
+            _strongBlockMax = _floorTiles.Count;
         }
         if (_minRareOresSpawn >= 1)
         {
             _minRareOresSpawn = 1;
         }
-        if (_maxRareOresSpawn >= ores.Count)
+        if (_maxRareOresSpawn >= _ores.Count)
         {
-            _maxRareOresSpawn = ores.Count;
+            _maxRareOresSpawn = _ores.Count;
         }
         if (_minOresSpawn >= 40)
         {
@@ -57,20 +61,26 @@ public class LevelBuilder : MonoBehaviour
         {
             if ( x == transform.position.x || x == 4)
             {
-                Instantiate(wallTiles[Random.Range(0, wallTiles.Count )],new Vector3(x, transform.position.y,0),Quaternion.identity);
+                Instantiate(_wallTiles[Random.Range(0, _wallTiles.Count )],new Vector3(x, transform.position.y,0),Quaternion.identity);
             }
             else
             {
                 if (Random.Range(_minOresSpawn,100)>95)
                 {
-                    Instantiate(ores[Random.Range(0 + (int)Random.Range(0, _minRareOresSpawn), (int)_maxRareOresSpawn)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
+                    Instantiate(_ores[Random.Range(0 + (int)Random.Range(0, _minRareOresSpawn), (int)_maxRareOresSpawn)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(floorTiles[Random.Range(0 + (int)Random.Range(0, _strongBlockMin), (int)_strongBlockMax)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
+                    Instantiate(_floorTiles[Random.Range(0 + (int)Random.Range(0, _strongBlockMin), (int)_strongBlockMax)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
                 }
-               
             }
+        }
+        if (Random.Range(0, 100) > 95)
+        {
+            int x = Random.Range(-1, 4);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(x,transform.position.y), Vector2.zero, Mathf.Infinity);
+            Destroy(hit.transform.gameObject);
+            Instantiate(_buffs[Random.Range(0, _buffs.Count)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
         }
         gameObject.transform.position = new Vector3(transform.position.x, transform.position.y-1, 0);
 

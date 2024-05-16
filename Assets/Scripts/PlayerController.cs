@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerMover playerMover;
-    [SerializeField] private GameManager _gameManager;
+    private bool isPlayerLeft;
+    private void Start()
+    {
+        isPlayerLeft = false;
+    }
     private void Update()
     {
         TakeInput();
@@ -18,16 +22,21 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A) && playerMover._isMoving == false && playerMover._isFly == false)
         {
+            if (isPlayerLeft == false)
+            {
+                isPlayerLeft = true;
+                transform.localScale = new Vector3(-1, 1);
+            }
             playerMover.AttemptMove<IAmBlock>(-1, 0);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (playerMover._isFly == true)
+            if (playerMover._isFly == true && playerMover._isMoving == false)
             {
                 playerMover.StopAllCoroutines();
                 playerMover.AttemptFall(playerMover._inverseMoveTime);
             }
-            else
+            else if (playerMover._isFly == false && playerMover._isMoving == false)
             {
                 playerMover.AttemptMove<IAmBlock>(0, -1);
             }
@@ -35,6 +44,11 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D) && playerMover._isMoving == false && playerMover._isFly == false)
         {
+            if (isPlayerLeft == true)
+            {
+                isPlayerLeft = false;
+                transform.localScale = new Vector3(1, 1);
+            }
             playerMover.AttemptMove<IAmBlock>(1, 0);
         }
     }

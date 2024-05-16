@@ -29,7 +29,7 @@ public abstract class IAmBlock : MonoBehaviour
         {
             isFloorDestroyed = true;
             DestroyAll();
-            //DestroyMe();
+
         }
         else
         {
@@ -43,7 +43,7 @@ public abstract class IAmBlock : MonoBehaviour
             Destroy(_myCurentEnduranceBar.gameObject);
         }
         Destroy(gameObject);
-        ScoreManager._scoreEvent.Invoke(10);
+        ScoreManager._scoreEvent.Invoke(1);
     }
     public virtual void DestMe()
     {
@@ -63,8 +63,8 @@ public abstract class IAmBlock : MonoBehaviour
     public void DestroyAll()
     {
         LevelBuilder.BuildNewLevel.Invoke();
-        DestroyMe();
         RaycastHit2D[] allBlocks;
+        DestroyMe();
         allBlocks = Physics2D.RaycastAll(gameObject.transform.position, new Vector2(1, 0), 4, _floorLayer);
         foreach (var block in allBlocks)
         {
@@ -75,6 +75,23 @@ public abstract class IAmBlock : MonoBehaviour
         foreach (var block in allBlocks)
         {
             block.transform.gameObject.GetComponent<IAmBlock>().DestMe();
+
+        }
+    }
+    public void ExplosiveDestroy()
+    {
+        LevelBuilder.BuildNewLevel.Invoke();
+        RaycastHit2D[] allBlocks;
+        allBlocks = Physics2D.RaycastAll(gameObject.transform.position, new Vector2(1, 0), 4, _floorLayer);
+        foreach (var block in allBlocks)
+        {
+            block.transform.gameObject.GetComponent<IAmBlock>().DestroyMe();
+
+        }
+        allBlocks = Physics2D.RaycastAll(gameObject.transform.position, new Vector2(-1, 0), 4, _floorLayer);
+        foreach (var block in allBlocks)
+        {
+            block.transform.gameObject.GetComponent<IAmBlock>().DestroyMe();
 
         }
     }

@@ -34,14 +34,15 @@ public class DamagePopup : MonoBehaviour
         }
         else
         {
-            _textMesh.fontSize = 20f;
+            _textMesh.fontSize = 7f;
+            _textColor = GetColorFromString("DC143C");
         }
         _textMesh.color = _textColor;
         _disappearTimer = DISAPPEAR_TIMER_MAX;
 
         sortingOrder++;
         _textMesh.sortingOrder = sortingOrder;
-        _moveVector = new Vector3(Random.Range(-1f,1f), 1)*_moveYSpeed;
+        _moveVector = new Vector3(Random.Range(-1f,2f), Random.Range(1,3)*_moveYSpeed);
     }
     private void Update()
     {

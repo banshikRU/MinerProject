@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UpgradeMenuManager : MonoBehaviour
 {
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private Gaga _gameManager;
     [SerializeField] private TextMeshProUGUI _cooperCount;
     [SerializeField] private TextMeshProUGUI _ironCount;
     [SerializeField] private TextMeshProUGUI _goldCount;

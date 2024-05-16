@@ -1,29 +1,33 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerMover : MonoBehaviour
 {
-    [SerializeField] private GameManager _gameManager;
-    [SerializeField]private List<AudioClip> sfx;
+    [SerializeField] private AudioClip _pickaxeHit;
+    [SerializeField] private ParticleSystem _playerParticleSystem;
+   // [SerializeField] private Animator _playerAnimator;
+    [SerializeField] private BuffManager _buffManager;
     [SerializeField] private LayerMask _floorLayer;
-    private Collider2D[] collider2Ds;
-    [SerializeField] private int _destroyBlocks;
-    [SerializeField] private int _timeInFly;
-    [SerializeField]private LayerMask _blockingLayer;
+    [SerializeField] private LayerMask _blockingLayer;
+    [SerializeField] private int _blockCanDestroyedWithExtraJump;
     [SerializeField] private float _moveTime;
     [SerializeField] private float _smoothFallTime;
-    public float _inverseMoveTime;
+    private Collider2D[] collider2Ds;
     private float _inverseSmoothFall;
-    public bool _isMoving;
-    public bool _isFly;
+    private int _pickaxeDamage;
     private bool _isDestroyMod;
+    private bool _isCriticalHit;
     private BoxCollider2D _myBoxCollider;
     private Rigidbody2D _myRigidBody;
+    [NonSerialized] public bool _isMoving;
+    [NonSerialized] public bool _isFly;
+    [NonSerialized] public float _inverseMoveTime;
+
     private void Start()
     {
+        _isCriticalHit = false;
         _isDestroyMod = false;
         _isFly = false;
         _myBoxCollider = GetComponent<BoxCollider2D>();
@@ -35,10 +39,10 @@ public class PlayerMover : MonoBehaviour
     {
         if (_isDestroyMod)
         {
-            OnBlockEnter(); 
+            ExtraJump(); 
         }
     }
-    private void OnBlockEnter()
+    private void ExtraJump()
     {
         collider2Ds =  Physics2D.OverlapBoxAll(transform.position, new Vector2(0.7f, 0.7f), 0f,_floorLayer);
         foreach (var colliders in collider2Ds)
@@ -77,13 +81,16 @@ public class PlayerMover : MonoBehaviour
             if (_fallTime == _inverseMoveTime)
             {
                 _isDestroyMod = true;
-                _dB = _destroyBlocks;
+                //_playerAnimator.SetBool("IsJump", false);
+                //_playerAnimator.SetBool("IsExtraJump", true);
+           
+                _dB = _blockCanDestroyedWithExtraJump;
             }
             else
             {
                 _dB = 0;
             }
-            StartCoroutine(Fall(_fallTime, new Vector3(transform.position.x,(hit.collider.gameObject.transform.position.y+1f)-_dB,0)));
+            StartCoroutine(Fall(_fallTime, new Vector3(transform.position.x,(hit.collider.gameObject.transform.position.y+0.55f)-_dB,0)));
         }
     }
     private IEnumerator Fall(float _fallTime, Vector3 end)
@@ -98,6 +105,8 @@ public class PlayerMover : MonoBehaviour
             yield return null;
         }
         _myRigidBody.MovePosition(end);
+        //_playerAnimator.SetBool("IsJump", false);
+        //_playerAnimator.SetBool("IsExtraJump", false);
         _isFly = false;
         _isMoving = false;
         _isDestroyMod = false;
@@ -113,6 +122,7 @@ public class PlayerMover : MonoBehaviour
         {
             if (yDir > 0)
             {
+                //_playerAnimator.SetBool("IsJump", true);
                 _isFly = true;
             }
             StartCoroutine(SmoothMovement(end));
@@ -123,7 +133,7 @@ public class PlayerMover : MonoBehaviour
     public void AttemptMove<T>(float xDir, float yDir) where T : Component
     {
         RaycastHit2D hit;
-        bool canMove = Move(xDir, yDir, out hit);
+        Move(xDir, yDir, out hit);
         if (hit.transform == null)
             return;
         if (hit.transform.gameObject.TryGetComponent<IAmBlock>(out IAmBlock wall))
@@ -133,13 +143,38 @@ public class PlayerMover : MonoBehaviour
     }
     private void HitBlock(float xDir, float yDir, RaycastHit2D hit, IAmBlock wall)
     {
-        SoundManager.instance.RandomizeSfx(sfx);
-        wall.HitMe(1, out bool isFloorDestroyed);
-       // _gameManager.CurentPickaxeEndurance--;
-        DamagePopup.Create(gameObject.transform.position + new Vector3(0, 0.5f), 1, false);
+        SoundManager.instance.PlaySingle(_pickaxeHit);
+        //_playerAnimator.Play("PlayerMine");
+        _playerParticleSystem.Play();
+        int pickaxeDamageMax = Random.Range(2, 5);
+        if (_buffManager.IsExtraDamageActive)
+        {
+            _isCriticalHit = true;
+            pickaxeDamageMax *= 2;
+        }
+        else
+        {
+            _isCriticalHit = false;
+        }
+        _pickaxeDamage = Random.Range(1,pickaxeDamageMax);
+        wall.HitMe(_pickaxeDamage, out bool isFloorDestroyed);
+        DamagePopup.Create(gameObject.transform.position + new Vector3(0, 0.5f), _pickaxeDamage, _isCriticalHit);
         if (isFloorDestroyed)
         {
-            Move(xDir, yDir, out hit);
+            if (wall.gameObject.TryGetComponent<ExplosionBlock>(out ExplosionBlock e))
+            {
+                AttemptFall(_inverseSmoothFall);
+            }
+            else
+            {
+                Move(xDir, yDir, out hit);
+            }
+                
         }
+        
+    }
+    public void HitMe()
+    {
+
     }
 }
