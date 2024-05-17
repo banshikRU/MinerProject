@@ -23,7 +23,7 @@ public class HeartManager : MonoBehaviour
     }
     private void HitMe(int hit)
     {
-        if (isExtraHelmetActive && FindObjectOfType<FlyRockGenerator>()._curentSnake != null)
+        if (isExtraHelmetActive && FindObjectOfType<ObstacleGenerator>()._curentSnake != null)
         {
             Destroy(GameObject.Find("ExtraHelmetPopUp"));
             isExtraHelmetActive = false;

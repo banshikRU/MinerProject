@@ -11,13 +11,10 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private BuffManager _buffManager;
     [SerializeField] private LayerMask _floorLayer;
     [SerializeField] private LayerMask _blockingLayer;
-    [SerializeField] private int _blockCanDestroyedWithExtraJump;
     [SerializeField] private float _moveTime;
     [SerializeField] private float _smoothFallTime;
-    private Collider2D[] collider2Ds;
     private float _inverseSmoothFall;
     private int _pickaxeDamage;
-    private bool _isDestroyMod;
     private bool _isCriticalHit;
     private BoxCollider2D _myBoxCollider;
     private Rigidbody2D _myRigidBody;
@@ -28,28 +25,11 @@ public class PlayerMover : MonoBehaviour
     private void Start()
     {
         _isCriticalHit = false;
-        _isDestroyMod = false;
         _isFly = false;
         _myBoxCollider = GetComponent<BoxCollider2D>();
         _myRigidBody = GetComponent<Rigidbody2D>();
         _inverseMoveTime = 1f / _moveTime;
         _inverseSmoothFall = 1f/_smoothFallTime;
-    }
-    private void Update()
-    {
-        if (_isDestroyMod)
-        {
-            ExtraJump(); 
-        }
-    }
-    private void ExtraJump()
-    {
-        collider2Ds =  Physics2D.OverlapBoxAll(transform.position, new Vector2(0.7f, 0.7f), 0f,_floorLayer);
-        foreach (var colliders in collider2Ds)
-        {
-            colliders.gameObject.GetComponent<IAmBlock>().DestroyAll();
-        }
-
     }
     private IEnumerator SmoothMovement(Vector3 end)
     {
@@ -71,26 +51,14 @@ public class PlayerMover : MonoBehaviour
     }
     public void AttemptFall(float _fallTime)
     {
-        float _dB;
         _isMoving = true;
         _myBoxCollider.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
         _myBoxCollider.enabled = true;
         if (hit.collider != null)
         {
-            if (_fallTime == _inverseMoveTime)
-            {
-                _isDestroyMod = true;
-                //_playerAnimator.SetBool("IsJump", false);
-                //_playerAnimator.SetBool("IsExtraJump", true);
-           
-                _dB = _blockCanDestroyedWithExtraJump;
-            }
-            else
-            {
-                _dB = 0;
-            }
-            StartCoroutine(Fall(_fallTime, new Vector3(transform.position.x,(hit.collider.gameObject.transform.position.y+0.55f)-_dB,0)));
+
+            StartCoroutine(Fall(_fallTime, new Vector3(transform.position.x, (hit.collider.gameObject.transform.position.y + 0.55f), 0)));
         }
     }
     private IEnumerator Fall(float _fallTime, Vector3 end)
@@ -109,7 +77,6 @@ public class PlayerMover : MonoBehaviour
         //_playerAnimator.SetBool("IsExtraJump", false);
         _isFly = false;
         _isMoving = false;
-        _isDestroyMod = false;
     }
     private bool Move(float xDir, float yDir, out RaycastHit2D hit)
     {
@@ -163,18 +130,14 @@ public class PlayerMover : MonoBehaviour
         {
             if (wall.gameObject.TryGetComponent<ExplosionBlock>(out ExplosionBlock e))
             {
+                BackGroundGenerator.instance.Invoke();
                 AttemptFall(_inverseSmoothFall);
             }
             else
             {
+                BackGroundGenerator.instance.Invoke();
                 Move(xDir, yDir, out hit);
             }
-                
         }
-        
-    }
-    public void HitMe()
-    {
-
     }
 }

@@ -128,32 +128,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WorldTiles_
+      name: Rock
       rect:
         serializedVersion: 2
-        x: 126
-        y: 282
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1a208a9cbbfdabf49b5c2b2c6ddf7f04
-      internalID: 3996717
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_1
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 282
+        x: 128
+        y: 80
         width: 16
         height: 16
       alignment: 0
@@ -170,116 +149,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WorldTiles_2
+      name: QuartzObsidian
       rect:
         serializedVersion: 2
-        x: 238
-        y: 283
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61f50d8f419bc8d4fb309e6f572784b8
-      internalID: -1529359124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_3
-      rect:
-        serializedVersion: 2
-        x: 350
-        y: 282
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58782f5a3efaee140b712659dd8a937d
-      internalID: -884427553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_4
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 122
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b19ff0bc36b98c498bbdaf7c1e1b603
-      internalID: 522696791
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_5
-      rect:
-        serializedVersion: 2
-        x: 126
-        y: 122
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ba1bdc74276ff04b9a26b5b723d08a5
-      internalID: -1926231692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_6
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 122
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 743578b92d45326478faf3c4290c61bf
-      internalID: -1045877736
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WorldTiles_7
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 90
+        x: 464
+        y: 112
         width: 16
         height: 16
       alignment: 0
@@ -296,11 +170,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WorldTiles_8
+      name: Dirt
       rect:
         serializedVersion: 2
-        x: 126
-        y: 90
+        x: 16
+        y: 80
         width: 16
         height: 16
       alignment: 0
@@ -310,113 +184,176 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d28b39cd0901ef4cbce8926d254df48
-      internalID: 789258055
+      spriteID: 55f249ec8aa55304cb5ea08a050b5f35
+      internalID: -984461163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CooperBlock
+      name: DirtRock
       rect:
         serializedVersion: 2
-        x: 478
-        y: 266
+        x: 128
+        y: 112
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 150636cefaa59644d89b74bbf6cd43d5
-      internalID: -1385481292
+      spriteID: 3afb776eef6bb1c4c8e65e80a5c281e5
+      internalID: 1548243345
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DiamondBlock
+      name: RockClay
       rect:
         serializedVersion: 2
-        x: 478
-        y: 74
+        x: 240
+        y: 112
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed7e803fe44ea594eae39c084e380744
-      internalID: -1250440214
+      spriteID: f9e753ab78887bd48988a17a18fa1865
+      internalID: 323705257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmeraldBlock
+      name: Clay
       rect:
         serializedVersion: 2
-        x: 478
-        y: 202
+        x: 240
+        y: 80
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 257d65c85404d8a47b9dcd5c6f7e19d3
-      internalID: 1839003506
+      spriteID: 765648cd7d1315546bffe7288dfe6e97
+      internalID: -702814128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GoldBlock
+      name: Lime
       rect:
         serializedVersion: 2
-        x: 478
-        y: 330
+        x: 352
+        y: 80
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dafa2df02d018d843a80bba5c5288ee4
-      internalID: 1950971792
+      spriteID: a607e471c7be33048850306c876bb28f
+      internalID: 248677752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IronBlock
+      name: ClayLime
       rect:
         serializedVersion: 2
-        x: 478
-        y: 298
+        x: 352
+        y: 112
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7854f7d8edf67f45970387ff47bc813
-      internalID: 81730836
+      spriteID: 2e7425c15b90fcf4eb16012627f7ee7b
+      internalID: -1453764917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obsidian
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cc399ffd61ed2f4c9b29d30dde353ba
+      internalID: 1063061019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ClayLimeRock
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4846525cadcd6914abc2af31223b5799
+      internalID: 42312990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Quartz
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6cbd324d80e7784ab6276e348eba65f
+      internalID: -414301119
       vertices: []
       indices: 
       edges: []
@@ -432,21 +369,25 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WorldTiles_1: 1319267868
-      WorldTiles_4: -702814128
       WorldTiles_9: 1796319227
+      Clay: -702814128
+      QuartzObsidian: -1512043301
+      DirtRock: 1548243345
+      ClayLimeRock: 42312990
       CooperBlock: -1385481292
-      WorldTiles_7: -1512043301
-      WorldTiles_2: 1548243345
+      Rock: 1319267868
+      Obsidian: 1063061019
       DiamondBlock: -1250440214
-      WorldTiles_8: 1063061019
-      WorldTiles_6: -1453764917
+      IronBlock: 81730836
       GoldBlock: 1950971792
       WorldTiles_: 1777739118
-      IronBlock: 81730836
-      WorldTiles_3: 323705257
-      WorldTiles_5: 248677752
+      Lime: 248677752
+      RockClay: 323705257
+      Quartz: -414301119
+      ClayLime: -1453764917
       EmeraldBlock: 1839003506
+      WorldTiles_11: 479539143
+      Dirt: -984461163
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

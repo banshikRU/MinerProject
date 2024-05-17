@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - Snake
   - Wall
+  - CloudsWall
   layers:
   - Default
   - TransparentFX

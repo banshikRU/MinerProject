@@ -31,16 +31,10 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (playerMover._isFly == true && playerMover._isMoving == false)
-            {
-                playerMover.StopAllCoroutines();
-                playerMover.AttemptFall(playerMover._inverseMoveTime);
-            }
-            else if (playerMover._isFly == false && playerMover._isMoving == false)
+            if (playerMover._isFly == false && playerMover._isMoving == false)
             {
                 playerMover.AttemptMove<IAmBlock>(0, -1);
             }
-
         }
         if (Input.GetKeyDown(KeyCode.D) && playerMover._isMoving == false && playerMover._isFly == false)
         {
@@ -61,20 +55,18 @@ public class PlayerController : MonoBehaviour
     }
     public void Down()
     {
-
-            if (playerMover._isFly == true)
-            {
-                playerMover.StopAllCoroutines();
-                playerMover.AttemptFall(playerMover._inverseMoveTime);
-            }
-            else
-            {
-                playerMover.AttemptMove<IAmBlock>(0, -1);
-            }
-
+        if (playerMover._isFly == false && playerMover._isMoving == false)
+        {
+            playerMover.AttemptMove<IAmBlock>(0, -1);
+        }
     }
     public void Left()
     {
+        if (isPlayerLeft == false)
+        {
+            isPlayerLeft = true;
+            transform.localScale = new Vector3(-1, 1);
+        }
         if (playerMover._isMoving == false && playerMover._isFly == false)
         {
             playerMover.AttemptMove<IAmBlock>(-1, 0);
@@ -82,6 +74,11 @@ public class PlayerController : MonoBehaviour
     }
     public void Rigth()
     {
+        if (isPlayerLeft == true)
+        {
+            isPlayerLeft = false;
+            transform.localScale = new Vector3(1, 1);
+        }
         if (playerMover._isMoving == false && playerMover._isFly == false)
         {
             playerMover.AttemptMove<IAmBlock>(1, 0);

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    [SerializeField] private Sprite attentionSprite;
-    [SerializeField]private SpriteRenderer curentAttentionSprite;
+    [SerializeField] private GameObject _attention;
     [SerializeField]private float timeToRevert;
     private bool isRevert;
     private void Awake()
     {
+        _attention.SetActive(false);
         isRevert = false;
     }
     public void RevertSprite()
     {
-        curentAttentionSprite.sprite = attentionSprite;
+        _attention.SetActive(true);
         isRevert = true;
     }
     private void Update()
@@ -25,7 +25,7 @@ public class Wall : MonoBehaviour
             if (timeToRevert <= 0)
             {
                 isRevert = false;
-                curentAttentionSprite.sprite = null;
+                _attention.SetActive(false);
             }
         }
     }
