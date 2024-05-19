@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985c3a713858b6c4fa29711312d70df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myEndurance: 10
+  _myEndurance: 16
   _myEnduranceBarPrefab: {fileID: 7035943409419007490, guid: 26289c2a8ea6a984abfb7ce61a85573a, type: 3}
   _floorLayer:
     serializedVersion: 2

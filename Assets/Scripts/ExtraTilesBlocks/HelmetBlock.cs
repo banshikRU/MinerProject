@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HelmetBlock : IAmBlock
 {
-    [SerializeField] private GameObject _myBuff;
+    HeartManager heartManager;
     public override void DestroyMe()
     {
         base.DestroyMe();
-        BuffVisualManager.buffCreate.Invoke(_myBuff);
+        heartManager = FindObjectOfType<HeartManager>();
+        heartManager._extraHelmetHeart.SetActive(true);
+        heartManager.isExtraHelmetActive = true;
     }
 }

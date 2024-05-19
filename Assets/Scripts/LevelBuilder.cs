@@ -65,7 +65,7 @@ public class LevelBuilder : MonoBehaviour
             }
             else
             {
-                if (Random.Range(_minOresSpawn,100)>95)
+                if (Random.Range(_minOresSpawn,100)>80)
                 {
                     Instantiate(_ores[Random.Range(0 + (int)Random.Range(0, _minRareOresSpawn), (int)_maxRareOresSpawn)], new Vector3(x, transform.position.y, 0), Quaternion.identity);
                 }

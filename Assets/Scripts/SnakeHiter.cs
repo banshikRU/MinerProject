@@ -14,7 +14,7 @@ public class SnakeHiter : MonoBehaviour
         if (collision.tag == "Player" && !isFirstHit)
         {
             isFirstHit =true;
-            HeartManager.hitMeInstance.Invoke(1);
+            HeartManager.hitMeInstance.Invoke(1, false);
         }
     }
 }

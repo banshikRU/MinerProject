@@ -11,7 +11,7 @@ public class DamagePopup : MonoBehaviour
     private const float DISAPPEAR_TIMER_MAX = 1f;
     private Vector3 _moveVector;
     private static int sortingOrder;
-    public static DamagePopup Create(Vector3 position, int damageAmount,bool isCriticalHit)
+    public static DamagePopup Create(Vector3 position, float damageAmount,bool isCriticalHit)
     {
         Transform damagePopupTransform = Instantiate(GameAssets.i.pfDamagePopup, position, Quaternion.identity);
 
@@ -24,7 +24,7 @@ public class DamagePopup : MonoBehaviour
     {
         _textMesh = transform.GetComponent<TextMeshPro>();
     }
-    public void Setup(int damageAmount, bool isCriticalHit)
+    public void Setup(float damageAmount, bool isCriticalHit)
     {
         _textMesh.SetText(damageAmount.ToString());
         if (!isCriticalHit)

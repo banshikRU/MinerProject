@@ -104,7 +104,7 @@ MonoBehaviour:
   _floorLayer:
     serializedVersion: 2
     m_Bits: 8
-  _collectableOre: {fileID: 8829350867942099655, guid: cb0883698e53b5a4ea89020f7dbf70e4, type: 3}
+  _collectableOre: {fileID: 8829350867942099655, guid: f00f3783ad8868b4cbdf5ae2f8332b91, type: 3}
 --- !u!61 &5675209952532397938
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -3,21 +3,39 @@ using UnityEngine;
 [SerializeField]
 public abstract class IAmBlock : MonoBehaviour
 {
-    [SerializeField] private  int _myEndurance;
+    [SerializeField] private  float _myEndurance;
     [SerializeField] private GameObject _myEnduranceBarPrefab;
     [SerializeField] private LayerMask _floorLayer;
     private HealBar _myCurentEnduranceBar;
     private GameObject _canvas;
-    private int _maxHealth;
-    public virtual int MyEndurance { get { return _myEndurance; } set { _myEndurance = value; } }
+    private bool isHitMe;
+    private float _maxHealth;
+    private float _timeToDeleteHealBar = 1.2f;
+    public virtual float MyEndurance { get { return _myEndurance; } set { _myEndurance = value; } }
     private void Start()
     {
         _maxHealth = _myEndurance;
         _canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
         _myCurentEnduranceBar = null;
     }
-    public void HitMe(int hit, out bool isFloorDestroyed)
+    private void FixedUpdate()
     {
+        if (isHitMe == true)
+        {
+            _timeToDeleteHealBar-= Time.deltaTime;
+
+            if (_timeToDeleteHealBar <=0)
+            {
+                isHitMe = false;
+                _timeToDeleteHealBar = 1.2f;
+                Destroy(_myCurentEnduranceBar.gameObject);
+            }
+        }
+    }
+    public void HitMe(float hit, out bool isFloorDestroyed)
+    {
+        isHitMe = true;
+        _timeToDeleteHealBar = 1.2f;
         if (_myCurentEnduranceBar == null)
         {
             _myCurentEnduranceBar = GenerateHillBar(gameObject).GetComponent<HealBar>();

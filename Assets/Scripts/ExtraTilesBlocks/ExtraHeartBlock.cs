@@ -7,6 +7,6 @@ public class ExtraHeartBlock : IAmBlock
     public override void DestroyMe()
     {
         base.DestroyMe();
-        HeartManager.hitMeInstance.Invoke(-1);
+        HeartManager.hitMeInstance.Invoke(-1,false);
     }
 }

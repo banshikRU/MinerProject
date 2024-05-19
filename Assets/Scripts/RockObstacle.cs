@@ -8,7 +8,7 @@ public class RockObstacle : MonoBehaviour
     {
         if (collision.gameObject.name =="Player")
         {
-            HeartManager.hitMeInstance.Invoke(1);
+            HeartManager.hitMeInstance.Invoke(1,true);
             Destroy(gameObject);
         }
         if (collision.gameObject.tag == "Floor")

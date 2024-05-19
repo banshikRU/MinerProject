@@ -11,15 +11,11 @@ public class Collectable : MonoBehaviour
     private void Start()
     {
         target = GameObject.Find("Target").transform;
+        ScoreManager._scoreEvent.Invoke(_price);
     }
     void Update()
     {
         float step = speed * Time.deltaTime;
         gameObject.transform.position = Vector2.Lerp(gameObject.transform.position, target.position, step);
-        if (Vector2.Distance(gameObject.transform.position,target.transform.position) < 2f)
-        {
-            Destroy(gameObject);
-            ScoreManager._scoreEvent.Invoke(_price);
-        }
     }
 }

@@ -4,28 +4,33 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-public class HitMe : UnityEvent<int> { }
+public class HitMe : UnityEvent<int,bool> { }
 public class HeartManager : MonoBehaviour
 {
     public static HitMe hitMeInstance = new HitMe();
+    [SerializeField] private AudioClip _playerTakeHit;
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private GameObject _firstHeart;
     [SerializeField] private GameObject _secondHeart;
     [SerializeField] private GameObject _thirdHeart;
+    public GameObject _extraHelmetHeart;
     [SerializeField] private Sprite _fullHeart;
     [SerializeField] private Sprite _emptyHeart;
     public bool isExtraHelmetActive;
     private int _curentHealth;
     private void Start()
     {
+        isExtraHelmetActive = false;
+        _extraHelmetHeart.SetActive(false);
         _curentHealth = 3;
         hitMeInstance.AddListener(HitMe);
     }
-    private void HitMe(int hit)
+    private void HitMe(int hit,bool isRockAttack)
     {
-        if (isExtraHelmetActive && FindObjectOfType<ObstacleGenerator>()._curentSnake != null)
+        SoundManager.instance.PlaySingle(_playerTakeHit);
+        if (isExtraHelmetActive && isRockAttack)
         {
-            Destroy(GameObject.Find("ExtraHelmetPopUp"));
+            _extraHelmetHeart.SetActive(false);
             isExtraHelmetActive = false;
         }
         else

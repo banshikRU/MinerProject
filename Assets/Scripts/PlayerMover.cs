@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,8 +14,9 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private LayerMask _blockingLayer;
     [SerializeField] private float _moveTime;
     [SerializeField] private float _smoothFallTime;
+    [NonSerialized] public float _damageMultiplier;
     private float _inverseSmoothFall;
-    private int _pickaxeDamage;
+    private float _pickaxeDamage;
     private bool _isCriticalHit;
     private BoxCollider2D _myBoxCollider;
     private Rigidbody2D _myRigidBody;
@@ -24,6 +26,7 @@ public class PlayerMover : MonoBehaviour
 
     private void Start()
     {
+        _damageMultiplier = 1;
         _isCriticalHit = false;
         _isFly = false;
         _myBoxCollider = GetComponent<BoxCollider2D>();
@@ -53,11 +56,10 @@ public class PlayerMover : MonoBehaviour
     {
         _isMoving = true;
         _myBoxCollider.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down,10,_floorLayer);
         _myBoxCollider.enabled = true;
         if (hit.collider != null)
         {
-
             StartCoroutine(Fall(_fallTime, new Vector3(transform.position.x, (hit.collider.gameObject.transform.position.y + 0.55f), 0)));
         }
     }
@@ -124,8 +126,8 @@ public class PlayerMover : MonoBehaviour
             _isCriticalHit = false;
         }
         _pickaxeDamage = Random.Range(1,pickaxeDamageMax);
-        wall.HitMe(_pickaxeDamage, out bool isFloorDestroyed);
-        DamagePopup.Create(gameObject.transform.position + new Vector3(0, 0.5f), _pickaxeDamage, _isCriticalHit);
+        wall.HitMe(_pickaxeDamage * _damageMultiplier, out bool isFloorDestroyed);
+        DamagePopup.Create(gameObject.transform.position + new Vector3(0, 0.5f), _pickaxeDamage*_damageMultiplier, _isCriticalHit);
         if (isFloorDestroyed)
         {
             if (wall.gameObject.TryGetComponent<ExplosionBlock>(out ExplosionBlock e))
