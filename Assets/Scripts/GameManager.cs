@@ -1,34 +1,100 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _startMenu;
-    [SerializeField] private GameObject _restartButton;
-    [SerializeField] private GameObject _playMenu;
-    private void Awake()
+    public static GameManager instance;
+    [SerializeField] private SmothMovement _smoth;
+    [SerializeField] private ScoreManager _scoreManager;
+    public bool _isPlay;
+    public void Initialize()
     {
+        AdsControl();
+        CheckForFirstTraining();
         Time.timeScale = 0f;
-        _playMenu.SetActive(false);
+        _isPlay = false;
+        Canvas.Instance.OpenStartMenu();
+        ObstacleGenerator.Instance.isTimerStart = false;
     }
     public void StartGame()
     {
-        _startMenu.SetActive(false);
-        _playMenu.SetActive(true);
+        PlayCountIterator.instance.CounterUpdater();
+        if (PlayerPrefs.GetInt("FirstTraining") == 1)
+        {
+            _isPlay = true;
+            Time.timeScale = 1f;
+            _smoth.StartSmoothMoveDown();
+            Canvas.Instance.OpenPlayMenu();
+            ObstacleGenerator.Instance.isTimerStart = true;
+        }
+        else
+        {
+            Canvas.Instance.OpenPlayMenu();
+        }
+    }
+    public void ResumeTraining()
+    {
+        _isPlay = true;
         Time.timeScale = 1f;
+        _smoth.StartSmoothMoveDown();
+        ObstacleGenerator.Instance.isTimerStart = true;
+    }
+    public void PauseTrainingGame()
+    {
+
+        ObstacleGenerator.Instance.isTimerStart = false;
+        _isPlay = false;
+        Time.timeScale = 0f;
+        _smoth.CancelInvoke();
     }
     public void PlayerDeath()
     {
+        RunTimeCoinManager.instance.SaveCoinsCount();
         Time.timeScale = 0f;
-       _restartButton.SetActive(true);
+        Canvas.Instance.OpenRestartMenu();
     }
     public void RestartGame()
     {
-        _restartButton.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1f;
+    }
+    public void PauseGame()
+    {
+        ObstacleGenerator.Instance.isTimerStart = false;
+        Canvas.Instance.OpenPauseMenu();
+        _isPlay = false;
+        _smoth.CancelInvoke();
+        Time.timeScale = 0f;
+    }
+    public void AdsControl()
+    {
+        if (PlayCountIterator.instance._counter % 2 == 0 || PlayCountIterator.instance._counter == 0)
+        {
+            YandexManager.ysdk.ShowFullScreenAdv();
+        }
+        if ((PlayCountIterator.instance._counter % 2 == 0 || PlayCountIterator.instance._counter == 0) && PlayerPrefs.GetInt("FirstTraining") ==1)
+        {
+            Canvas.Instance.OpenAdsMenu();
+        }
+        else
+        {
+            Canvas.Instance.CloseAdsMenu();
+        }
+    }
+    private void CheckForFirstTraining()
+    {
+        if (PlayerPrefs.GetInt("FirstTraining") == 0)
+        {
+            Canvas.Instance.isFirstTraining = 1;
+        }
+        else if (PlayerPrefs.GetInt("FirstTraining") == 1)
+        {
+            Canvas.Instance.isFirstTraining = 0;
+        }
+        if (PlayerPrefs.GetInt("LastTraining") == 0 && (PlayerPrefs.GetInt("FirstTraining") == 1))
+        {
+            Canvas.Instance.OpenLastTrainingMenu();
+            PlayerPrefs.SetInt("LastTraining", 1);
+            PlayerPrefs.Save();
+        }
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +9,7 @@ public class ExplosionBlock : IAmBlock
     public override void DestroyMe()
     {
         base.DestroyMe();
+        HeartManager.hitMeInstance.Invoke(1, false);
         HitAllBlock();
 
     }

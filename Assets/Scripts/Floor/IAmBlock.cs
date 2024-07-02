@@ -62,6 +62,7 @@ public abstract class IAmBlock : MonoBehaviour
         }
         Destroy(gameObject);
         ScoreManager._scoreEvent.Invoke(1);
+        
     }
     public virtual void DestMe()
     {
@@ -75,7 +76,7 @@ public abstract class IAmBlock : MonoBehaviour
     {
         GameObject healBar = Instantiate(_myEnduranceBarPrefab, _canvas.transform);
         Vector3 screenPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        healBar.transform.position = screenPos;
+        healBar.transform.position = screenPos + new Vector3(0,-0.4f);
         return healBar;
     }
     public void DestroyAll()

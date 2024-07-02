@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerMover playerMover;
+    [SerializeField] private SmothMovement _smoth;
+    [SerializeField] private GameManager _gameManager;
     private bool isPlayerLeft;
     private void Start()
     {
@@ -16,49 +17,48 @@ public class PlayerController : MonoBehaviour
     }
     private void TakeInput()
     {
-        if (Input.GetKeyDown(KeyCode.W) && playerMover._isMoving == false && playerMover._isFly == false)
+        if (Input.GetKeyDown(KeyCode.W) && _gameManager._isPlay)
         {
-            playerMover.AttemptMove<IAmBlock>(0, 4);
+            _smoth.JumpTo();
         }
-        if (Input.GetKeyDown(KeyCode.A) && playerMover._isMoving == false && playerMover._isFly == false)
+        if (Input.GetKeyDown(KeyCode.S) && _gameManager._isPlay)
+        {
+            _smoth.SuperFall();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A) && _gameManager._isPlay)
         {
             if (isPlayerLeft == false)
             {
                 isPlayerLeft = true;
                 transform.localScale = new Vector3(-1, 1);
             }
-            playerMover.AttemptMove<IAmBlock>(-1, 0);
+            _smoth.CancelInvoke();
+            _smoth.MoveTo(-1, 0);
         }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (playerMover._isFly == false && playerMover._isMoving == false)
-            {
-                playerMover.AttemptMove<IAmBlock>(0, -1);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.D) && playerMover._isMoving == false && playerMover._isFly == false)
+
+        if (Input.GetKeyDown(KeyCode.D) && _gameManager._isPlay)
         {
             if (isPlayerLeft == true)
             {
                 isPlayerLeft = false;
                 transform.localScale = new Vector3(1, 1);
             }
-            playerMover.AttemptMove<IAmBlock>(1, 0);
+            _smoth.CancelInvoke();
+            _smoth.MoveTo(1,0);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            PlayerPrefs.DeleteAll();
         }
     }
     public void Up()
     {
-        if ( playerMover._isMoving == false && playerMover._isFly == false)
-        {
-            playerMover.AttemptMove<IAmBlock>(0, 4);
-        }
+            _smoth.JumpTo();
     }
     public void Down()
     {
-        if (playerMover._isFly == false && playerMover._isMoving == false)
-        {
-            playerMover.AttemptMove<IAmBlock>(0, -1);
-        }
+            _smoth.SuperFall();
     }
     public void Left()
     {
@@ -67,10 +67,7 @@ public class PlayerController : MonoBehaviour
             isPlayerLeft = true;
             transform.localScale = new Vector3(-1, 1);
         }
-        if (playerMover._isMoving == false && playerMover._isFly == false)
-        {
-            playerMover.AttemptMove<IAmBlock>(-1, 0);
-        }
+            _smoth.MoveTo(-1, 0);
     }
     public void Rigth()
     {
@@ -79,9 +76,6 @@ public class PlayerController : MonoBehaviour
             isPlayerLeft = false;
             transform.localScale = new Vector3(1, 1);
         }
-        if (playerMover._isMoving == false && playerMover._isFly == false)
-        {
-            playerMover.AttemptMove<IAmBlock>(1, 0);
-        }
+            _smoth.MoveTo(1, 0);
     }
 }

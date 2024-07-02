@@ -10,6 +10,11 @@ public class Collectable : MonoBehaviour
     [SerializeField]private int _price;
     private void Start()
     {
+        if (BuffManager.instance.IsExtraExtractionActive)
+        {
+            _price *= 2;
+        }
+        DamagePopup.Create(gameObject.transform.position + new Vector3(0, 0.5f),_price, BuffManager.instance.IsExtraExtractionActive);
         target = GameObject.Find("Target").transform;
         ScoreManager._scoreEvent.Invoke(_price);
     }

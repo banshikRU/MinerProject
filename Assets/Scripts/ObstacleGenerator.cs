@@ -1,27 +1,38 @@
-using System.CodeDom.Compiler;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
+using Random = UnityEngine.Random;
 
 public class ObstacleGenerator : MonoBehaviour
 {
+    public static ObstacleGenerator Instance;
+    [SerializeField] private AudioClip _rockRainSFX;
+    [SerializeField] private GameObject _playerParticle;
+    [SerializeField] private HeartManager _heartManager;
+    [SerializeField] private GameObject _stoneRain;
     [SerializeField] private LevelBuilder _levelBuilder;
     [SerializeField] private GameObject _attention;
     [SerializeField] private GameObject _snake;
     [SerializeField] private GameObject _rock;
-    public GameObject _curentSnake;
+    [NonSerialized]public GameObject _curentSnake;
     private double timeToRock;
     private double timeToSnake;
-    private bool isTimerStart;
+    private double rocksToStoneRain;
+    [NonSerialized]public bool isTimerStart;
     [SerializeField] private GameObject player;
     private List<int> level = new List<int>() {-1,0,1,2,3};
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
+
         _curentSnake = null;
+        rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
         timeToRock = 5 - (_levelBuilder.CurentLevel * 0.005);
-        timeToSnake = 10 - (_levelBuilder.CurentLevel * 0.005);
+        timeToSnake = 5 - (_levelBuilder.CurentLevel * 0.003);
         isTimerStart = true;
     }
     private void FixedUpdate()
@@ -31,6 +42,7 @@ public class ObstacleGenerator : MonoBehaviour
             timeToRock -= Time.fixedDeltaTime;
             if (timeToRock <= 0)
             {
+                rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
                 timeToRock =5 - (_levelBuilder.CurentLevel * 0.005);
                 GenerateRockObstacle();
             }
@@ -38,20 +50,30 @@ public class ObstacleGenerator : MonoBehaviour
             timeToSnake -= Time.fixedDeltaTime;
             if (timeToSnake<= 0)
             {
-                timeToSnake = 10 - (_levelBuilder.CurentLevel * 0.005);
+                timeToSnake = 7 - (_levelBuilder.CurentLevel * 0.003);
                 GenerateSnakeObstacle();
             }
         }
     }
     private void GenerateRockObstacle()
     {
-        int x = Random.Range(0, 100);
-        if (x>80)
+        if (PlayerPrefs.GetInt("FirstTraining")==0)
         {
+            TrainingManager.instance.OpenSixthTraining();
+            PlayerPrefs.SetInt("FirstTraining", 1);
+            PlayerPrefs.Save();
+
+        }
+        int x = Random.Range(0, 100);
+        if (x>90)
+        {
+            CameraControl.instance.ShakeCamera(2f, 10f);
+            _stoneRain.SetActive(true);
+            SoundManager.instance.PlaySingle(_rockRainSFX);
             StartCoroutine(GenerateRainRock());
         }
         else
-        if (x > 50)
+        if (x > 75)
         {
             List<int> a = new List<int>(level);
             int y = Random.Range(1, 5);
@@ -67,14 +89,14 @@ public class ObstacleGenerator : MonoBehaviour
         {
             Instantiate(_attention, player.transform.position, Quaternion.identity);
             Instantiate(_rock, player.transform.position+ new Vector3(0,15), Quaternion.identity);
+           
         }
 
     }
     private void GenerateSnakeObstacle()
     {
-        Debug.Log("snake");
         int x = Random.Range(0, 100);
-        if (x > 50 && _curentSnake == null)
+        if (x > 75 && _curentSnake == null)
         {
             int y = Random.Range(0, 2);
             int z;
@@ -87,12 +109,19 @@ public class ObstacleGenerator : MonoBehaviour
                 z = -15;
             }
             _curentSnake = Instantiate(_snake, player.transform.position + new Vector3(z,Random.Range(-5,5)), Quaternion.identity);
+            if (z == -15)
+            {
+                _curentSnake.transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
     }
     IEnumerator GenerateRainRock()
     {
+
+        _heartManager.isRainRockActive = true;
+        isTimerStart = false;
         List<int> a = new List<int>(level);
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < Math.Ceiling(rocksToStoneRain); i++)
         {
             yield return new WaitForSeconds(0.5f);
             if (a.Count == 0)
@@ -104,6 +133,23 @@ public class ObstacleGenerator : MonoBehaviour
             Instantiate(_attention, new Vector3(levelX, player.transform.position.y), Quaternion.identity);
             Instantiate(_rock, new Vector3(levelX, player.transform.position.y + 15), Quaternion.identity);
         }
-        
+        yield return new WaitForSeconds(2f);
+        isTimerStart = true;
+        if (_heartManager._takeRocks != 0)
+        {
+            _heartManager._takeRocks = 0;
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("FirstSuperJump")==0)
+            {
+                TrainingManager.instance.OpenEightTraining();
+                PlayerPrefs.SetInt("FirstSuperJump", 1);
+                PlayerPrefs.Save();
+            }
+            _playerParticle.SetActive(true);
+            _heartManager._takeRocks = 0;
+        }
+        CameraControl.instance.StopShaking();
     }
 }

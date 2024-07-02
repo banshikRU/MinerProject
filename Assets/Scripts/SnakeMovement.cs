@@ -44,7 +44,7 @@ public class SnakeMovement : MonoBehaviour
     {
         if (collision.tag == "Wall" && isFirstBlock == false)
         {
-            CameraControl.instance.ShakeCamera(3, 3f);
+            //CameraControl.instance.ShakeCamera(3, 3f);
             isFirstBlock = true;
             collision.GetComponent<Wall>().RevertSprite();
         }

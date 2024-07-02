@@ -7,6 +7,7 @@ public class BuildNewLevel : UnityEvent { }
 public class LevelBuilder : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _wallTiles;
+    private Queue<GameObject> _generatedWalls = new Queue<GameObject>();   
     [SerializeField] private List<GameObject> _floorTiles;
     [SerializeField] private List<GameObject> _ores;
     [SerializeField] private List<GameObject> _buffs;
@@ -61,7 +62,8 @@ public class LevelBuilder : MonoBehaviour
         {
             if ( x == transform.position.x || x == 4)
             {
-                Instantiate(_wallTiles[Random.Range(0, _wallTiles.Count )],new Vector3(x, transform.position.y,0),Quaternion.identity);
+                GameObject wall =  Instantiate(_wallTiles[Random.Range(0, _wallTiles.Count )],new Vector3(x, transform.position.y,0),Quaternion.identity);
+                CheckGeneratedWallCount(wall);
             }
             else
             {
@@ -84,5 +86,13 @@ public class LevelBuilder : MonoBehaviour
         }
         gameObject.transform.position = new Vector3(transform.position.x, transform.position.y-1, 0);
 
+    }
+    private void CheckGeneratedWallCount(GameObject wall)
+    {
+        _generatedWalls.Enqueue(wall);
+        if (_generatedWalls.Count>= 60)
+        {
+            Destroy(_generatedWalls.Dequeue());
+        }
     }
 }

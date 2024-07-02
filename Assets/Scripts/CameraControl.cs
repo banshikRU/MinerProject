@@ -20,8 +20,12 @@ public class CameraControl : MonoBehaviour
         noise.m_AmplitudeGain = intensity;
         Invoke(nameof(StopShaking), time);
     }
-    private void StopShaking()
+    public void StopShaking()
     {
         noise.m_AmplitudeGain = 0f;
+    }
+    public void IncreaseCamera()
+    {
+        cinemachineCamera.m_Lens.OrthographicSize = 5f;
     }
 }
