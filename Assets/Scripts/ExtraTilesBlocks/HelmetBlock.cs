@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class HelmetBlock : IAmBlock
 {
-    HeartManager heartManager;
-    SmothMovement playerMover;
+    HeartManager _heartManager;
+    SmothMovement _playerMover;
     public override void DestroyMe()
     {
         base.DestroyMe();
-        playerMover = FindObjectOfType<SmothMovement>();
-        heartManager = FindObjectOfType<HeartManager>();
+        _playerMover = FindObjectOfType<SmothMovement>();
+        _heartManager = FindObjectOfType<HeartManager>();
         BuffManager.instance.IsExtraDefenderActive = true;
         if(!BuffManager.instance.IsKnightActive && !BuffManager.instance.IsPirateActive)
         {
-            playerMover.SetAnimatorHelmet();
+            _playerMover.SetAnimatorHelmet();
         }
-        heartManager._extraHelmetHeart.SetActive(true);
+        _heartManager._extraHelmetHeart.SetActive(true);
     }
 }

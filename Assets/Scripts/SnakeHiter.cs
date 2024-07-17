@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SnakeHiter : MonoBehaviour
 {
-    private bool isFirstHit;
+    private bool _isFirstHit;
     private void Start()
     {
-        isFirstHit = false;
+        _isFirstHit = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !isFirstHit)
+        if (collision.tag == "Player" && !_isFirstHit)
         {
-            isFirstHit =true;
+            _isFirstHit =true;
             HeartManager.hitMeInstance.Invoke(1, false);
         }
     }

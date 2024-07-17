@@ -17,11 +17,20 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private float _timeToMultiply;
     [SerializeField] private float timeToFire;
     public int curentScores;
+    private string _curentMultipleDamageText;
     public static PlayerScore _scoreEvent;
     private float t;
     private float _timeMyulti;
     private int scoresToMulti;
     private bool isFire;
+    private void Awake()
+    {
+        Language.lanSwitch.AddListener(SwitchLanguage);
+    }
+    private void OnEnable()
+    {
+        Language.instance.LanguageSwitch();
+    }
     private void Start()
     {
         instance = this;
@@ -31,13 +40,22 @@ public class ScoreManager : MonoBehaviour
         _timeMyulti = _timeToMultiply;
         _scoreEvent = new PlayerScore();
         _scores.text = "Очки";
-        _damageMulti.text = "Множитель урона";
         UpdateScoresMulti(1f);
         _scoreEvent.AddListener(ScoreUpdate);
     }
+    private void SwitchLanguage(string lang)
+    {
+        if (lang == "ru")
+        {   _curentMultipleDamageText = "Урон*X";
+        }
+        else
+        {
+            _curentMultipleDamageText = "Damage*X";
+        }
+    }
     private void UpdateScoresMulti (float scoresMulti)
     {
-        _damageMulti.text = "Damage X"+ scoresMulti;
+        _damageMulti.text = _curentMultipleDamageText + scoresMulti;
     } 
     public void ScoreUpdate(int scores)
     {

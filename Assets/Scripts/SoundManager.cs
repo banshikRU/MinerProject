@@ -4,10 +4,10 @@ using Unity.VisualScripting;
 using System.Collections.Generic;
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] public AudioSource pickaxeSfx;
-    [SerializeField] public AudioSource efxSource;
-    [SerializeField] public AudioSource musicSource;
-    [SerializeField] public AudioSource reserveEfxSourcee;
+    [SerializeField] private AudioSource pickaxeSfx;
+    [SerializeField] private AudioSource efxSource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource reserveEfxSourcee;
     public static SoundManager instance = null;
     [SerializeField] private float lowPitchRange = .95f;
     [SerializeField] private float highPitchRange = 1.05f;

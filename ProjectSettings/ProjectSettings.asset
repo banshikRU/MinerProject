@@ -379,8 +379,8 @@ PlayerSettings:
     CONFIGURE_SHADOWS_AROUND_CANVAS: 
     CONNECT_PLUGIN: 
     CUSTOMIZE_BARS_BACKGROUND: 
-    CUSTOMIZE_LOADING_SCREEN_BACKGROUND: 
-    CUSTOMIZE_LOGO: 
+    CUSTOMIZE_LOADING_SCREEN_BACKGROUND: backgroundColor = "#000000"
+    CUSTOMIZE_LOGO: display = "none"
     CUSTOM_EVENT_IN_CSS: 
     CUSTOM_EVENT_IN_HTML: <script src="https://yandex.ru/games/sdk/v2"></script>
     CUSTOM_EVENT_IN_JS: var lb; YaGames.init().then(ysdk=>{console.log("Yandex SDK

@@ -9,19 +9,19 @@ public class BuffManager: MonoBehaviour
     {
         instance = this;
     }
-    private bool isExtraDamageActive;
-    private bool isExtraDefenderActive;
-    private bool isExtraExtractionActive;
-    private bool isDoubleBuffTimeActive;
-    private bool isMegaPickaxeActive;
-    private bool isPirateActive;
-    private bool isKnightActive;
+    private bool _isExtraDamageActive;
+    private bool _isExtraDefenderActive;
+    private bool _isExtraExtractionActive;
+    private bool _isDoubleBuffTimeActive;
+    private bool _isMegaPickaxeActive;
+    private bool _isPirateActive;
+    private bool _isKnightActive;
 
-    public bool IsExtraDamageActive { get => isExtraDamageActive; set => isExtraDamageActive = value; }
-    public bool IsExtraDefenderActive { get => isExtraDefenderActive; set => isExtraDefenderActive = value; }
-    public bool IsExtraExtractionActive { get => isExtraExtractionActive; set => isExtraExtractionActive = value; }
-    public bool IsDoubleBuffTimeActive { get => isDoubleBuffTimeActive; set => isDoubleBuffTimeActive = value; }
-    public bool IsMegaPickaxeActive { get => isMegaPickaxeActive; set => isMegaPickaxeActive = value; }
-    public bool IsPirateActive { get => isPirateActive; set => isPirateActive = value; }
-    public bool IsKnightActive { get => isKnightActive; set => isKnightActive = value; }
+    public bool IsExtraDamageActive { get => _isExtraDamageActive; set => _isExtraDamageActive = value; }
+    public bool IsExtraDefenderActive { get => _isExtraDefenderActive; set => _isExtraDefenderActive = value; }
+    public bool IsExtraExtractionActive { get => _isExtraExtractionActive; set => _isExtraExtractionActive = value; }
+    public bool IsDoubleBuffTimeActive { get => _isDoubleBuffTimeActive; set => _isDoubleBuffTimeActive = value; }
+    public bool IsMegaPickaxeActive { get => _isMegaPickaxeActive; set => _isMegaPickaxeActive = value; }
+    public bool IsPirateActive { get => _isPirateActive; set => _isPirateActive = value; }
+    public bool IsKnightActive { get => _isKnightActive; set => _isKnightActive = value; }
 }

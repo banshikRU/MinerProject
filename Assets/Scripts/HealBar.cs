@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealBar : MonoBehaviour
 {
-    [SerializeField]private Image healBar;
+    [SerializeField]private Image _healBar;
     public void UpdateHealBar(float fillAmount)
     {
-        healBar.fillAmount = fillAmount;
+        _healBar.fillAmount = fillAmount;
     }
 }

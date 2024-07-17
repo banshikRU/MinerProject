@@ -22,13 +22,16 @@ public class Language : MonoBehaviour
             }
             instance = this;
             DontDestroyOnLoad(gameObject);
-            CurentLanguage = YandexManager.ysdk.GetLanguage();
         }
         else
         {
             Destroy(gameObject);
         }
        
+    }
+    public void Initialize()
+    {
+        CurentLanguage = YandexManager.ysdk.GetLanguage();
     }
     public void LanguageSwitch()
     {

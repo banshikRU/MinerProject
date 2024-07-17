@@ -4,24 +4,24 @@ using TMPro;
 public class LocalizationText : MonoBehaviour
 {
     [TextArea(0,4)]
-    [SerializeField]private string ru;
+    [SerializeField]private string _ru;
     [TextArea(0, 4)]
-    [SerializeField]private string eng;
-    private TextMeshProUGUI localizationText;
+    [SerializeField]private string _eng;
+    private TextMeshProUGUI _localizationText;
     private void Awake()
     {
-        localizationText = GetComponent<TextMeshProUGUI>();
+        _localizationText = GetComponent<TextMeshProUGUI>();
         Language.lanSwitch.AddListener(SwitchLanguage);
     }
     private void SwitchLanguage(string lang)
     {
         if (lang == "ru")
         {
-            localizationText.text = ru;
+            _localizationText.text = _ru;
         }
         else
         {
-            localizationText.text = eng;
+            _localizationText.text = _eng;
         }
     }
     private void OnEnable()

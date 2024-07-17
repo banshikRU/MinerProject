@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     [SerializeField] private GameObject _attention;
-    [SerializeField]private float timeToRevert;
+    [SerializeField]private float _timeToRevert;
     private bool isRevert;
     private void Awake()
     {
@@ -21,8 +21,8 @@ public class Wall : MonoBehaviour
     {
         if (isRevert)
         {
-            timeToRevert -= Time.fixedDeltaTime;
-            if (timeToRevert <= 0)
+            _timeToRevert -= Time.fixedDeltaTime;
+            if (_timeToRevert <= 0)
             {
                 isRevert = false;
                 _attention.SetActive(false);

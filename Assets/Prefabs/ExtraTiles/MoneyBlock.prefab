@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 1543743648, guid: c95f70dc6f384ea4289c2c883da926b4, type: 3}
-  m_Color: {r: 0.7296437, g: 0.8018868, b: 0.10969208, a: 1}
+  m_Sprite: {fileID: -647855950, guid: 8042bac7fde6d9a45806dd80bb06459b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,7 +123,7 @@ Animator:
   m_GameObject: {fileID: 4467592268250150610}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c22e2cae24073b428147d476475e078, type: 2}
+  m_Controller: {fileID: 9100000, guid: bb681d21dceed104db7e12572733c175, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -150,4 +150,5 @@ MonoBehaviour:
   _floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  _moneyTakeAudio: {fileID: 8300000, guid: 607fb4664806a4341be4c55998a396f4, type: 3}
   _myPrize: 1

@@ -17,7 +17,6 @@ public class RestartMenu : MonoBehaviour
     {
         _scoresCount.text = ScoreManager.instance.curentScores.ToString();
         _moneyCount.text = RunTimeCoinManager.instance.AbsoluteCoinsCount.ToString();
-       //YandexManager.ysdk.SaveToLeaderBoard(ScoreManager.instance.curentScores);
     }
     public void PlusRunTimeCoins(int value)
     {
