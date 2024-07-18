@@ -1,9 +1,21 @@
 using UnityEngine;
-
+[System.Serializable]
+public class PlayerInfo
+{
+    public int Coins;
+    public int Scores;
+    public int Bombs;
+    public bool isFirstScinBuy;
+    public bool isSecondScinBuy;
+    public bool isThirdScinBuy;
+    public bool isFirstTraining;
+    public bool isLastTraining ;
+    public bool isFirstSuperJump;
+}
 public class PlayerProgress : MonoBehaviour
 {
-    [SerializeField] private bool isTrainingFinish;
     public static PlayerProgress instance;
+    public PlayerInfo playerInfo;
     private void Awake()
     {
         if (instance == null)
@@ -22,7 +34,7 @@ public class PlayerProgress : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("Coins"))
         {
-            PlayerPrefs.SetInt("Coins", 0);
+            PlayerPrefs.SetInt("Coins", 55);
             Debug.Log("Coins Set!");
         }
         if (!PlayerPrefs.HasKey("Bombs"))
@@ -52,17 +64,17 @@ public class PlayerProgress : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("FirstTraining"))
         {
-            PlayerPrefs.SetInt("FirstTraining", isTrainingFinish == true ? 1 : 0);
+            PlayerPrefs.SetInt("FirstTraining", 0);
             Debug.Log("FirstTraining Set!");
         }
         if (!PlayerPrefs.HasKey("LastTraining"))
         {
-            PlayerPrefs.SetInt("LastTraining", isTrainingFinish == true ? 1 : 0);
+            PlayerPrefs.SetInt("LastTraining", 0);
             Debug.Log("LastTraining Set!");
         }
         if (!PlayerPrefs.HasKey("FirstSuperJump"))
         {
-            PlayerPrefs.SetInt("FirstSuperJump", isTrainingFinish == true ? 1 : 0);
+            PlayerPrefs.SetInt("FirstSuperJump", 0);
             Debug.Log("FirstSuperJump Set!");
         }
         if (!PlayerPrefs.HasKey("GameRated"))
@@ -70,5 +82,18 @@ public class PlayerProgress : MonoBehaviour
             PlayerPrefs.SetInt("GameRated", 0);
             Debug.Log("GameRated Set!");
         }
+        YandexManager.ysdk.Load();
+       
+    }
+    public void Save()
+    {
+        string jsonString= JsonUtility.ToJson(playerInfo);
+        YandexManager.ysdk.Save(jsonString);
+    }
+    public void SetPlayerInfo(string value)
+    {
+        playerInfo = JsonUtility.FromJson<PlayerInfo>(value);
+        Debug.Log(playerInfo.Coins);
+        Debug.Log(playerInfo.Scores);
     }
 }

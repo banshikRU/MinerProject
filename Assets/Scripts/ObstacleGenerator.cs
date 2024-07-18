@@ -16,11 +16,11 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] private GameObject _snake;
     [SerializeField] private GameObject _rock;
     [NonSerialized]public GameObject _curentSnake;
-    private double _timeToRock;
-    private double _timeToSnake;
-    private double _rocksToStoneRain;
+    private double timeToRock;
+    private double timeToSnake;
+    private double rocksToStoneRain;
     [NonSerialized]public bool isTimerStart;
-    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject player;
     private List<int> level = new List<int>() {-1,0,1,2,3};
     private void Awake()
     {
@@ -30,27 +30,27 @@ public class ObstacleGenerator : MonoBehaviour
     {
 
         _curentSnake = null;
-        _rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
-        _timeToRock = 5 - (_levelBuilder.CurentLevel * 0.005);
-        _timeToSnake = 5 - (_levelBuilder.CurentLevel * 0.003);
+        rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
+        timeToRock = 5 - (_levelBuilder.CurentLevel * 0.005);
+        timeToSnake = 5 - (_levelBuilder.CurentLevel * 0.003);
         isTimerStart = true;
     }
     private void FixedUpdate()
     {
         if (isTimerStart)
         {
-            _timeToRock -= Time.fixedDeltaTime;
-            if (_timeToRock <= 0)
+            timeToRock -= Time.fixedDeltaTime;
+            if (timeToRock <= 0)
             {
-                _rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
-                _timeToRock =5 - (_levelBuilder.CurentLevel * 0.005);
+                rocksToStoneRain = 5 + (_levelBuilder.CurentLevel * 0.03);
+                timeToRock =5 - (_levelBuilder.CurentLevel * 0.005);
                 GenerateRockObstacle();
             }
 
-            _timeToSnake -= Time.fixedDeltaTime;
-            if (_timeToSnake<= 0)
+            timeToSnake -= Time.fixedDeltaTime;
+            if (timeToSnake<= 0)
             {
-                _timeToSnake = 7 - (_levelBuilder.CurentLevel * 0.003);
+                timeToSnake = 7 - (_levelBuilder.CurentLevel * 0.003);
                 GenerateSnakeObstacle();
             }
         }
@@ -81,14 +81,14 @@ public class ObstacleGenerator : MonoBehaviour
             {
                 int levelX = a[Random.Range(0, a.Count)];
                 a.Remove(levelX);
-                Instantiate(_attention, new Vector3(levelX,_player.transform.position.y), Quaternion.identity);
-                Instantiate(_rock, new Vector3(levelX, _player.transform.position.y + 15), Quaternion.identity);
+                Instantiate(_attention, new Vector3(levelX,player.transform.position.y), Quaternion.identity);
+                Instantiate(_rock, new Vector3(levelX, player.transform.position.y + 15), Quaternion.identity);
             }
         }
         else
         {
-            Instantiate(_attention, _player.transform.position, Quaternion.identity);
-            Instantiate(_rock, _player.transform.position+ new Vector3(0,15), Quaternion.identity);
+            Instantiate(_attention, player.transform.position, Quaternion.identity);
+            Instantiate(_rock, player.transform.position+ new Vector3(0,15), Quaternion.identity);
            
         }
 
@@ -108,7 +108,7 @@ public class ObstacleGenerator : MonoBehaviour
             {
                 z = -15;
             }
-            _curentSnake = Instantiate(_snake, _player.transform.position + new Vector3(z,Random.Range(-5,5)), Quaternion.identity);
+            _curentSnake = Instantiate(_snake, player.transform.position + new Vector3(z,Random.Range(-5,5)), Quaternion.identity);
             if (z == -15)
             {
                 _curentSnake.transform.localScale = new Vector3(-1, 1, 1);
@@ -121,7 +121,7 @@ public class ObstacleGenerator : MonoBehaviour
         _heartManager.isRainRockActive = true;
         isTimerStart = false;
         List<int> a = new List<int>(level);
-        for (int i = 0; i < Math.Ceiling(_rocksToStoneRain); i++)
+        for (int i = 0; i < Math.Ceiling(rocksToStoneRain); i++)
         {
             yield return new WaitForSeconds(0.5f);
             if (a.Count == 0)
@@ -130,8 +130,8 @@ public class ObstacleGenerator : MonoBehaviour
             }
             int levelX = a[Random.Range(0, a.Count)];
             a.Remove(levelX);
-            Instantiate(_attention, new Vector3(levelX, _player.transform.position.y), Quaternion.identity);
-            Instantiate(_rock, new Vector3(levelX, _player.transform.position.y + 15), Quaternion.identity);
+            Instantiate(_attention, new Vector3(levelX, player.transform.position.y), Quaternion.identity);
+            Instantiate(_rock, new Vector3(levelX, player.transform.position.y + 15), Quaternion.identity);
         }
         yield return new WaitForSeconds(2f);
         isTimerStart = true;

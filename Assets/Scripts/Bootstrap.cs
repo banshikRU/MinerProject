@@ -11,7 +11,6 @@ public class Bootstrap : MonoBehaviour
     private void Start()
     {
         PlayerProgress.Initialize();//Load all extern info player
-        Language.Initialize();
         ConsumablesBomb.Initialize();
         CoinManager.Initialize(); // Load coinsCount for MainMenu
         MarketMenu.Initialize();

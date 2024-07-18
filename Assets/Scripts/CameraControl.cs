@@ -6,26 +6,26 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public static CameraControl instance;
-    private CinemachineVirtualCamera _cinemachineCamera;
-    private CinemachineBasicMultiChannelPerlin _noise;
+    private CinemachineVirtualCamera cinemachineCamera;
+    private CinemachineBasicMultiChannelPerlin noise;
     private void Awake()
     {
         instance = this;
-        _cinemachineCamera = GetComponent<CinemachineVirtualCamera>();
-        _noise = _cinemachineCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cinemachineCamera = GetComponent<CinemachineVirtualCamera>();
+        noise = cinemachineCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         StopShaking();
     }
     public void ShakeCamera(float intensity, float time)
     {
-        _noise.m_AmplitudeGain = intensity;
+        noise.m_AmplitudeGain = intensity;
         Invoke(nameof(StopShaking), time);
     }
     public void StopShaking()
     {
-        _noise.m_AmplitudeGain = 0f;
+        noise.m_AmplitudeGain = 0f;
     }
     public void IncreaseCamera()
     {
-        _cinemachineCamera.m_Lens.OrthographicSize = 5f;
+        cinemachineCamera.m_Lens.OrthographicSize = 5f;
     }
 }

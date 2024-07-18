@@ -2,33 +2,33 @@ using UnityEngine;
 
 public class SnakeMovement : MonoBehaviour
 {
-    private Transform _player;
-    [SerializeField]private GameObject _targetPrefab;
-    private Transform _targetTransform;
+    private Transform player;
+    [SerializeField]private GameObject targetPrefab;
+    private Transform targetTransform;
     public float speed = 5f;
-    private bool _reachedTarget = false;
-    private bool _isFirstBlock;
+    private bool reachedTarget = false;
+    private bool isFirstBlock;
     private void Start()
     {
-        _player = GameObject.Find("Player").transform;
-        _isFirstBlock = false;
+        player = GameObject.Find("Player").transform;
+        isFirstBlock = false;
         RotateToPlayer();
-        _targetTransform =  Instantiate(_targetPrefab,_player.transform.position ,Quaternion.identity).transform;
+        targetTransform =  Instantiate(targetPrefab,player.transform.position ,Quaternion.identity).transform;
     }
     void Update()
     {
 
-        if (_targetTransform != null)
+        if (targetTransform != null)
         {
-            Vector3 direction = _targetTransform.position - transform.position;
+            Vector3 direction = targetTransform.position - transform.position;
             direction.Normalize();
             transform.Translate(direction * speed * Time.deltaTime, Space.World);
-            if (Vector3.Distance(transform.position, _targetTransform.position) < 0.1f && !_reachedTarget)
+            if (Vector3.Distance(transform.position, targetTransform.position) < 0.1f && !reachedTarget)
             {
-                _reachedTarget = true;
-                _targetTransform.position += direction * 10f; 
+                reachedTarget = true;
+                targetTransform.position += direction * 10f; 
             }
-            else if(Vector3.Distance(transform.position, _targetTransform.position) < 0.1f)
+            else if(Vector3.Distance(transform.position, targetTransform.position) < 0.1f)
             {
                 Destroy(gameObject);
             }
@@ -37,15 +37,15 @@ public class SnakeMovement : MonoBehaviour
     }
     private void RotateToPlayer()
     {
-        Vector3 directionn = _player.position - gameObject.transform.position;
+        Vector3 directionn = player.position - gameObject.transform.position;
         gameObject.transform.rotation= Quaternion.LookRotation(Vector3.forward, directionn);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Wall" && _isFirstBlock == false)
+        if (collision.tag == "Wall" && isFirstBlock == false)
         {
             //CameraControl.instance.ShakeCamera(3, 3f);
-            _isFirstBlock = true;
+            isFirstBlock = true;
             collision.GetComponent<Wall>().RevertSprite();
         }
     }

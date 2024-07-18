@@ -35,7 +35,20 @@ public class YandexManager : MonoBehaviour
     }
     public void ShowFullScreenAdv()
     {
-        ShowAdv();
+        //ShowAdv();
+    }
+    public void Save(string date)
+    {
+       //SaveExtern(date);
+    }
+    public void Load()
+    {
+      // LoadExtern();
+    }
+    public void SetPlayerData(string data)
+    {
+        PlayerProgress.instance.SetPlayerInfo(data);
+        CoinManager.instance.Initialize();
     }
     public void AddCoins(int value)
     {
@@ -45,6 +58,8 @@ public class YandexManager : MonoBehaviour
     public void AddBomb()
     {
         SoundManager.instance.AdvOff();
+        //PlayerProgress.instance.playerInfo.Bombs++;
+        //PlayerProgress.instance.Save();
         PlayerPrefs.SetInt("Bombs", PlayerPrefs.GetInt("Bombs") + 1);
         PlayerPrefs.Save();
         ConsumablesBomb.instance.Initialize();
@@ -77,6 +92,8 @@ public class YandexManager : MonoBehaviour
     public void AddRunTimeCoins(int value)
     {
         SoundManager.instance.AdvOff();
+        //PlayerProgress.instance.playerInfo.Coins += value;
+        //PlayerProgress.instance.Save();
         PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + value);
         PlayerPrefs.Save();
         RunTimeCoinManager.instance.AbsoluteCoinsCount += value;
@@ -85,7 +102,7 @@ public class YandexManager : MonoBehaviour
     }
     public void SaveToLeaderBoard(int value)
     {
-       // SaveToLeaderBoardExt(value);
+        SaveToLeaderBoardExt(value);
     }
     public void RateGame()
     {
